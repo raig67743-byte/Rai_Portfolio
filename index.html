@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rai | Game Design Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg: #0b0e11;
+            --surface: #15191e;
+            --border: #2d333b;
+            --primary: #10b981; 
+            --text-main: #f0f2f5;
+            --text-dim: #9ba3af;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background-color: var(--bg); color: var(--text-main); font-family: 'Inter', sans-serif; line-height: 1.6; }
+
+        /* --- NAVEGAÇÃO --- */
+        nav { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 2rem; position: sticky; top: 0; z-index: 100; }
+        .nav-container { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; height: 70px; }
+        .logo { font-weight: 700; font-size: 1.2rem; text-transform: uppercase; }
+        .logo span { color: var(--primary); }
+        .tabs { display: flex; gap: 2.5rem; }
+        .tab-btn { background: none; border: none; color: var(--text-dim); font-weight: 500; font-size: 0.9rem; cursor: pointer; position: relative; padding: 24px 0; }
+        .tab-btn.active { color: var(--primary); }
+        .tab-btn.active::after { content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 2px; background: var(--primary); }
+
+        /* --- CONTEÚDO --- */
+        .container { max-width: 1200px; margin: 0 auto; padding: 5rem 2rem; }
+        .section { display: none; }
+        .section.active { display: block; animation: fadeIn 0.4s ease; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        h1 { font-size: 3rem; margin-bottom: 1.5rem; letter-spacing: -1.5px; }
+        .lead { color: var(--text-dim); font-size: 1.25rem; max-width: 800px; margin-bottom: 4rem; }
+
+        /* --- PROJETOS ESPAÇADOS --- */
+        .project-item { margin-bottom: 8rem; } 
+        .project-info { margin-bottom: 2rem; }
+        .badge { display: inline-block; padding: 4px 12px; border-radius: 4px; background: rgba(16, 185, 129, 0.1); color: var(--primary); font-size: 0.8rem; font-weight: 700; margin-bottom: 1rem; }
+        
+        .image-container { 
+            width: 100%; 
+            background: var(--surface); 
+            border: 1px solid var(--border); 
+            border-radius: 12px; 
+            padding: 10px;
+            margin-bottom: 2rem;
+        }
+        .project-img { width: 100%; border-radius: 8px; display: block; }
+
+        /* --- CERTIFICADOS (GRID) --- */
+        .cert-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
+        .cert-item { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; transition: 0.3s; }
+        .cert-item:hover { border-color: var(--primary); transform: translateY(-5px); cursor: pointer; }
+        .cert-item img { width: 100%; border-radius: 8px; margin-bottom: 10px; display: block; }
+
+        /* --- BOTÕES DE LINKS --- */
+        .link-group { display: flex; gap: 1rem; margin-top: 2rem; flex-wrap: wrap; }
+        .btn-link { 
+            text-decoration: none; 
+            padding: 12px 24px; 
+            border-radius: 8px; 
+            font-weight: 600; 
+            font-size: 0.9rem; 
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .btn-primary { background: var(--primary); color: #000; }
+        .btn-primary:hover { opacity: 0.9; transform: translateY(-2px); }
+        .btn-secondary { border: 1px solid var(--border); color: var(--text-main); }
+        .btn-secondary:hover { background: var(--border); }
+
+        /* --- SOBRE --- */
+        .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; margin-top: 2rem; }
+        .skill-list { list-style: none; color: var(--text-dim); }
+        .skill-list li { margin-bottom: 0.5rem; position: relative; padding-left: 20px; }
+        .skill-list li::before { content: '→'; position: absolute; left: 0; color: var(--primary); }
+
+        footer { text-align: center; padding: 6rem; border-top: 1px solid var(--border); color: var(--text-dim); }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="nav-container">
+            <div class="logo">RAI<span>.DESIGN</span></div>
+            <div class="tabs">
+                <button class="tab-btn active" onclick="switchTab(event, 'home')">Trabalhos</button>
+                <button class="tab-btn" onclick="switchTab(event, 'certs')">Certificados</button>
+                <button class="tab-btn" onclick="switchTab(event, 'about')">Sobre</button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        
+        <section id="home" class="section active">
+            <h1>Quest & Systems Designer.</h1>
+            <p class="lead">Projetando regras, fluxos e mecânicas que dão vida aos mundos virtuais.</p>
+            
+            <article class="project-item">
+                <div class="project-info">
+                    <span class="badge">QUEST DESIGN</span>
+                    <h2>RPG Quest System: Ramificações e Lógica (BR)</h2>
+                    <p style="color: var(--text-dim); margin-top: 1rem; max-width: 700px;">
+                        Uma estrutura detalhada de missão inicial focada em escolhas do jogador e impacto sistêmico. 
+                        Inclui estados de falha dinâmicos e balanceamento de recompensas.
+                    </p>
+                </div>
+                <div class="image-container">
+                    <img src="Fluxo1.png" alt="Fluxograma da Missão" class="project-img">
+                </div>
+                <div class="link-group">
+                    <a href="https://miro.com/app/board/uXjVGgWpkuM=/?share_link_id=851529234880" target="_blank" class="btn-link btn-secondary">
+                        🔗 Abrir Board Interativo (Miro)
+                    </a>
+                    <a href="https://docs.google.com/document/d/1YwRbPjgQS3lOw6ZKE1rdcW9h5WzdiFVq4KB0pjhR_Sg/edit?usp=sharing" target="_blank" class="btn-link btn-primary">
+                        📄 Ver GDD Completo (Google Docs)
+                    </a>
+                </div>
+            </article>
+
+            <article class="project-item">
+                <div class="project-info">
+                    <span class="badge">QUEST DESIGN</span>
+                    <h2>RPG Quest System: Ramificações e Lógica (ENG)</h2>
+                    <p style="color: var(--text-dim); margin-top: 1rem; max-width: 700px;">
+                        Uma estrutura detalhada de missão inicial focada em escolhas do jogador e impacto sistêmico. 
+                        Inclui estados de falha dinâmicos e balanceamento de recompensas.
+                    </p>
+                </div>
+                <div class="image-container">
+                    <img src="Fluxo2.png" alt="Fluxograma da Missão" class="project-img">
+                </div>
+                <div class="link-group">
+                    <a href="https://miro.com/app/board/uXjVGgUFOew=/?share_link_id=95795357761" target="_blank" class="btn-link btn-secondary">
+                        🔗 Abrir Board Interativo (Miro)
+                    </a>
+                    <a href="https://docs.google.com/document/d/1es9WaG6UIh9EucH-7lMSZ56G5maTLKpKFMwaEh0Uo6A/edit?usp=sharing" target="_blank" class="btn-link btn-primary">
+                        📄 Ver GDD Completo (Google Docs)
+                    </a>
+                </div>
+            </article>
+        </section>
+
+        <section id="certs" class="section">
+            <h1>Certificados.</h1>
+            <p class="lead">Minhas formações e qualificações técnicas.</p>
+            <div class="cert-grid">
+                <a href="https://cursos.alura.com.br/certificate/57c8d8b8-ddaf-41a1-8c86-f1c1c085419c?lang" target="_blank" style="text-decoration: none; color: inherit;"><div class="cert-item"><img src="Cert1.png" alt="Certificado"><h3>Análise de dados</h3></div></a>
+                <a href="https://cursos.alura.com.br/certificate/f43fd3e7-82d1-4bdb-9169-002cbd8ae16b?lang" target="_blank" style="text-decoration: none; color: inherit;"><div class="cert-item"><img src="Cert2.png" alt="Certificado"><h3>Lógica de programação</h3></div></a>
+                <a href="https://cursos.alura.com.br/certificate/00001139663173SP/start-lab-decomposicao-desvendando-formato-da-terra-parte2" target="_blank" style="text-decoration: none; color: inherit;"><div class="cert-item"><img src="Cert3.png" alt="Certificado"><h3>Lógica de programação</h3></div></a>
+                <a href="https://cursos.alura.com.br/certificate/00001139663173SP/entrada-saida-dados-criando-genio-virtual-parte1" target="_blank" style="text-decoration: none; color: inherit;"><div class="cert-item"><img src="Cert4.png" alt="Certificado"><h3>Lógica de programação</h3></div></a>
+                <a href="https://cursos.alura.com.br/certificate/00001139663173SP/teclado-mouse-introducao-sp" target="_blank" style="text-decoration: none; color: inherit;"><div class="cert-item"><img src="Cert5.png" alt="Certificado"><h3>Computação</h3></div></a>
+                <a href="https://cursos.alura.com.br/certificate/00001139663173SP/introducao-computacao-estudos-sp" target="_blank" style="text-decoration: none; color: inherit;"><div class="cert-item"><img src="Cert6.png" alt="Certificado"><h3>Computação</h3></div></a>
+                <a href="https://cursos.alura.com.br/certificate/00001139663173SP/seguranca-praticas-protecao-1-sp" target="_blank" style="text-decoration: none; color: inherit;"><div class="cert-item"><img src="Cert7.png" alt="Certificado"><h3>Cyber Segurança</h3></div></a>
+            </div>
+        </section>
+
+        <section id="about" class="section">
+            <h1>Sobre Rai</h1>
+            <div class="about-grid">
+                <div>
+                    <p class="lead" style="margin-bottom: 1.5rem;">Com 3 anos de experiência em game dev, atualmente focado no papel de desenvolvedor e contribuidor individual em projetos de Game Design.</p>
+                    <p>Atuo na criação de documentação técnica que serve de ponte entre a criatividade narrativa e a implementação funcional.</p>
+                </div>
+                <div>
+                    <h3 style="margin-bottom: 1rem; color: var(--primary);">Skillset</h3>
+                    <ul class="skill-list">
+                        <li>Lógica de Sistemas & Branching</li>
+                        <li>Roblox Studio</li>
+                        <li>Godot Engine</li>
+                        <li>Documentação Técnica (GDD)</li>
+                        <li>Desenvolvimento de Level Design</li>
+                        <li>Hardware Mastery: Ryzen 5 | GTX 1660 Ti</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <footer>
+        &copy; 2026 RAI DESIGN. Todos os direitos reservados.
+    </footer>
+
+    <script>
+        function switchTab(evt, tabName) {
+            const sections = document.querySelectorAll('.section');
+            const btns = document.querySelectorAll('.tab-btn');
+            sections.forEach(s => s.classList.remove('active'));
+            btns.forEach(b => b.classList.remove('active'));
+            document.getElementById(tabName).classList.add('active');
+            evt.currentTarget.classList.add('active');
+        }
+    </script>
+</body>
+</html>
